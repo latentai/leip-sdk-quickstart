@@ -27,7 +27,7 @@ services:
   leip-design-offline:
     image: leip-design-offline:${LEIP_DESIGN_VERSION}
     container_name: leip-design-offline
-    privileged: true # development only
+    # privileged: true # development only
     profiles: ["leip-design-offline"]
     environment:
       - LEIP_LICENSE_KEY=${LEIP_LICENSE_KEY}

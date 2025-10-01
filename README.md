@@ -34,17 +34,24 @@ You'll be prompted for:
 
 ```bash
 # LEIP Design with Jupyter (includes optimize functionality)
+# Includes tutorial notebooks for both Design and Optimize
 docker compose --profile leip-design up
 
 # LEIP Optimize standalone with Jupyter
+# Includes tutorial notebooks for Optimize only
 docker compose --profile leip-optimize-jupyter up
 
 # LEIP Optimize bash shell (detached, for CLI workflows)
+# Does not include tutorial notebooks
 docker compose --profile leip-optimize-bash up -d
 docker compose exec leip-optimize-bash bash
 ```
 
+**Note:** Notebook availability can be adjusted in `docker-compose.yml` volume mounts.
+
 ### 3. Offline Mode
+
+Offline mode includes all notebooks bundled inside the container (no external mounts required).
 
 ```bash
 # Build offline image (first time only)
