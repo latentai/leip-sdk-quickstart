@@ -33,13 +33,13 @@ You'll be prompted for:
 ### 2. Start Services
 
 ```bash
-# LEIP Design (online mode)
+# LEIP Design with Jupyter (includes optimize functionality)
 docker compose --profile leip-design up
 
-# LEIP Optimize with Jupyter
+# LEIP Optimize standalone with Jupyter
 docker compose --profile leip-optimize-jupyter up
 
-# LEIP Optimize bash shell (detached)
+# LEIP Optimize bash shell (detached, for CLI workflows)
 docker compose --profile leip-optimize-bash up -d
 docker compose exec leip-optimize-bash bash
 ```

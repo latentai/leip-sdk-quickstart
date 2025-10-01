@@ -12,7 +12,8 @@ services:
       - "6006:6006"
     volumes:
       - ./workspace:/latentai/workspace
-      - ./leip-design/notebooks:/latentai/leip-design/notebooks # Might not be necessary
+      - ./leip-design/notebooks:/latentai/leip-design/notebooks
+      - ./leip-optimize/notebooks:/latentai/leip-optimize/notebooks
       - ~/.config/leip:/root/.config/leip:ro
     deploy:
       resources:
