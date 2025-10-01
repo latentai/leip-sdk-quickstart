@@ -1,0 +1,104 @@
+services:
+  leip-design:
+    image: repository.latentai.io/leip-design:${LEIP_DESIGN_VERSION}
+    container_name: leip-design
+    # privileged: true # development only
+    profiles: ["leip-design"]
+    environment:
+      - LEIP_LICENSE_KEY=${LEIP_LICENSE_KEY}
+      - TZ=America/New_York
+    ports:
+      - "${DESIGN_PORT:-8888}:8888"
+      - "6006:6006"
+    volumes:
+      - ./workspace:/latentai/workspace
+      - ./leip-design/notebooks:/latentai/leip-design/notebooks # Might not be necessary
+      - ~/.config/leip:/root/.config/leip:ro
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    shm_size: '12g'
+
+  leip-design-offline:
+    image: leip-design-offline:${LEIP_DESIGN_VERSION}
+    container_name: leip-design-offline
+    privileged: true # development only
+    profiles: ["leip-design-offline"]
+    environment:
+      - LEIP_LICENSE_KEY=${LEIP_LICENSE_KEY}
+      - TZ=America/New_York
+    ports:
+    - "${DESIGN_PORT:-8888}:8888"
+    - "6006:6006"
+    volumes:
+      - ~/.config/leip:/root/.config/leip:ro
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    shm_size: '12g'
+
+  leip-optimize:
+    image: repository.latentai.io/leip-optimize:${LEIP_OPTIMIZE_VERSION}
+    container_name: ${NAME:-leip-optimize-jupyter}
+    profiles: ["leip-optimize-jupyter"]
+    stdin_open: true
+    tty: true
+    ports:
+      - "${OPTIMIZE_PORT:-8889}:${OPTIMIZE_PORT:-8889}"
+    volumes:
+      - ./latentai:/latentai
+      - ./leip-optimize/notebooks:/latentai/leip-optimize/notebooks
+      - ~/.leip:/root/.leip:ro
+    environment:
+      - PORT=${OPTIMIZE_PORT:-8889}
+      - LEIP_LICENSE_KEY=${LEIP_LICENSE_KEY}
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    command: >
+      bash -c '
+      pip install jupyter &&
+      echo Starting Jupyter server on port ${OPTIMIZE_PORT:-8889} &&
+      source /root/.bashrc &&
+      $(nohup jupyter lab --no-browser --allow-root --ip=0.0.0.0 --port=${OPTIMIZE_PORT:-8889} >/dev/null 2>&1 &) &&
+      sleep 1 &&
+      jupyter server list &&
+      TOKEN=$$(jupyter server list | grep -o "token=[a-z0-9]\+" | cut -d"=" -f2) &&
+      echo Copy and paste this URL to access your notebook: http://127.0.0.1:${OPTIMIZE_PORT:-8889}/?token=$$TOKEN &&
+      bash
+      '
+
+  leip-optimize-bash:
+    image: repository.latentai.io/leip-optimize:${LEIP_OPTIMIZE_VERSION}
+    container_name: ${NAME:-leip-optimize-bash}
+    profiles: ["leip-optimize-bash"]
+    stdin_open: true
+    tty: true
+    ports:
+      - "${OPTIMIZE_PORT:-8889}:${OPTIMIZE_PORT:-8889}"
+    volumes:
+      - ${DIR:-./latentai}:/latentai
+      - ~/.leip:/root/.leip:ro
+    environment:
+      - PORT=${OPTIMIZE_PORT:-8889}
+      - LEIP_LICENSE_KEY=${LEIP_LICENSE_KEY}
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+    command: bash

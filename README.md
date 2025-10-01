@@ -1,1 +1,77 @@
-# leip-sdk-quickstart
+# LEIP Docker Setup
+
+Docker Compose setup for LEIP Design and LEIP Optimize with GPU support.
+
+## Prerequisites
+
+- Docker and Docker Compose
+- NVIDIA GPU with drivers
+- NVIDIA Container Toolkit
+- LatentAI credentials (Repository Token & License Key)
+
+## Quick Start
+
+### 1. Initial Setup
+
+Configure credentials and generate .env file:
+
+```bash
+source setup.sh
+```
+
+You'll be prompted for:
+- Repository Token Name
+- Repository Token Passcode
+- LEIP License Key
+
+### 2. Start Services
+
+```bash
+# LEIP Design (online mode)
+docker compose --profile leip-design up
+
+# LEIP Optimize with Jupyter
+docker compose --profile leip-optimize-jupyter up
+
+# LEIP Optimize bash shell (detached)
+docker compose --profile leip-optimize-bash up -d
+docker compose exec leip-optimize-bash bash
+```
+
+### 3. Offline Mode
+
+```bash
+# Build offline image (first time only)
+./leip-design/build-offline.sh
+
+# Run offline mode
+docker compose --profile leip-design-offline up
+```
+
+### 4. Stop Services
+
+```bash
+docker compose down
+```
+
+## Configuration
+
+Default ports:
+- LEIP Design: 8888
+- LEIP Optimize: 8889
+- TensorBoard: 6006
+
+To change versions or ports, edit `.env` or re-run `source setup.sh`.
+
+## Directory Structure
+
+```
+.
+├── setup.sh                 # Interactive setup script
+├── docker-compose.yml       # Service definitions
+├── .env                     # Generated configuration (do not commit)
+├── workspace/               # LEIP Design workspace
+├── latentai/                # LEIP Optimize workspace
+└── leip-design/
+    └── build-offline.sh     # Offline image builder
+```
