@@ -77,8 +77,14 @@ docker compose --profile leip-design-offline up
 ### 4. Stop Services
 
 ```bash
+# Stop containers (preserves container state)
+docker compose stop
+
+# Stop and remove containers (clean shutdown)
 docker compose down
 ```
+
+**Note:** `stop` pauses containers for quick restart. `down` removes containers but preserves volumes.
 
 ## Configuration
 
