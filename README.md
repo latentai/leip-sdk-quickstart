@@ -54,6 +54,19 @@ docker compose exec leip-optimize-bash bash
 docker compose --profile leip-design-offline up
 ```
 
+#### Creating a Tarball for Transfer
+
+```bash
+# Save the image as a compressed tarball
+docker save leip-design-offline:${LEIP_DESIGN_VERSION} | gzip > leip-design-offline-${LEIP_DESIGN_VERSION}.tar.gz
+
+# Transfer to target machine, then load:
+docker load -i leip-design-offline-${LEIP_DESIGN_VERSION}.tar.gz
+
+# Run the loaded image
+docker compose --profile leip-design-offline up
+```
+
 ### 4. Stop Services
 
 ```bash
