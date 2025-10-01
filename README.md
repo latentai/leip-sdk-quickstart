@@ -9,6 +9,12 @@ Docker Compose setup for LEIP Design and LEIP Optimize with GPU support.
 - NVIDIA Container Toolkit
 - LatentAI credentials (Repository Token & License Key)
 
+### Cloud Setup (AWS)
+
+- g4dn.xlarge EC2 instance
+- Deep Learning OSS Nvidia Driver AMI GPU TensorFlow 2.18 (Ubuntu 22.04)
+- 150GB of storage
+
 ## Quick Start
 
 ### 1. Initial Setup
