@@ -4,6 +4,12 @@ set -e
 # Change to script's directory so relative paths work
 cd "$(dirname "$0")"
 
+# Remove existing container if it exists
+if docker ps -a --format '{{.Names}}' | grep -q "^leip-build-temp$"; then
+  echo "Found existing leip-build-temp container, removing it..."
+  docker rm -f leip-build-temp
+fi
+
 echo "Starting container with GPU access from base image..."
 docker run -d --gpus all --name leip-build-temp \
   -e LEIP_LICENSE_KEY=${LEIP_LICENSE_KEY} \

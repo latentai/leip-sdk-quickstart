@@ -2,6 +2,12 @@
 
 set -e
 
+echo "Setting up TVM logs"
+git clone https://github.com/tlc-pack/tophub.git
+mkdir -p ~/.tvm/tophub
+cp tophub/tophub/* ~/.tvm/tophub
+rm -rf tophub
+
 echo "Installing Python packages for LEIP Optimize..."
 pip install \
   torch \
@@ -12,7 +18,7 @@ pip install \
   tflite \
   huggingface_hub \
   colorama \
-  optimum \
+  optimum[onnx] \
   timm
 
 echo "Downloading models and datasets..."
