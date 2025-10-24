@@ -32,6 +32,7 @@ You'll be prompted for:
 
 ### 2. Start Services
 
+Choose **one** of the following:
 ```bash
 # LEIP Design with Jupyter (includes optimize functionality)
 # Includes tutorial notebooks for both Design and Optimize
@@ -49,10 +50,7 @@ docker compose exec leip-optimize-bash bash
 
 **Note:** Notebook availability can be adjusted in `docker-compose.yml` volume mounts.
 
-### 3. Offline Mode
-
-Offline mode includes all notebooks bundled inside the container (no external mounts required).
-
+### 2b. Offline Mode (Alternative to Step 2)
 ```bash
 # Build offline image (first time only)
 ./leip-design/build-offline.sh
@@ -62,7 +60,6 @@ docker compose --profile leip-design-offline up
 ```
 
 #### Creating a Tarball for Transfer
-
 ```bash
 # Save the image as a compressed tarball
 docker save leip-design-offline:${LEIP_DESIGN_VERSION} | gzip > leip-design-offline-${LEIP_DESIGN_VERSION}.tar.gz
@@ -74,8 +71,7 @@ docker load -i leip-design-offline-${LEIP_DESIGN_VERSION}.tar.gz
 docker compose --profile leip-design-offline up
 ```
 
-### 4. Stop Services
-
+### 3. Stop Services
 ```bash
 # Stop containers (preserves container state)
 docker compose stop
