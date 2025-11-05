@@ -42,6 +42,15 @@ docker exec leip-build-temp bash /tmp/leip_optimize_setup.sh
 echo "Cleaning up setup script..."
 docker exec leip-build-temp rm /tmp/leip_optimize_setup.sh
 
+echo "Copying vulnerability patch script to container..."
+docker cp patch_vulnerabilities.sh leip-build-temp:/tmp/patch_vulnerabilities.sh
+
+echo "Patching vulnerabilities..."
+docker exec leip-build-temp bash /tmp/patch_vulnerabilities.sh
+
+echo "Cleaning up patch script..."
+docker exec leip-build-temp rm /tmp/patch_vulnerabilities.sh
+
 echo "Committing container to final image without license key..."
 docker commit \
   --change='ENV LEIP_LICENSE_KEY=' \
