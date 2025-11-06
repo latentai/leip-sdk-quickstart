@@ -26,6 +26,7 @@ docker exec leip-build-temp jupyter nbconvert \
 echo "Creating directories in container..."
 docker exec leip-build-temp mkdir -p /latentai/leip-design/notebooks
 docker exec leip-build-temp mkdir -p /latentai/leip-optimize/notebooks
+docker exec leip-build-temp mkdir -p /latentai/leip-deploy/notebooks
 
 echo "Copying LEIP Design notebooks to container..."
 docker cp ./notebooks/. leip-build-temp:/latentai/leip-design/notebooks/
