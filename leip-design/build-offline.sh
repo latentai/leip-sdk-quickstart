@@ -33,6 +33,9 @@ docker cp ./notebooks/. leip-build-temp:/latentai/leip-design/notebooks/
 echo "Copying LEIP Optimize notebooks to container..."
 docker cp ../leip-optimize/notebooks/. leip-build-temp:/latentai/leip-optimize/notebooks/
 
+echo "Copying LEIP Deploy notebooks to container..."
+docker cp ../leip-deploy/notebooks/. leip-build-temp:/latentai/leip-deploy/notebooks/
+
 echo "Copying LEIP Optimize setup script to container..."
 docker cp leip_optimize_setup.sh leip-build-temp:/tmp/leip_optimize_setup.sh
 
