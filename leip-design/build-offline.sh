@@ -63,4 +63,4 @@ docker commit \
 echo "Removing temporary container..."
 docker rm -f leip-build-temp
 
-echo "Build complete! GettingStartedwithLEIPDesign.ipynb has been executed with outputs."
+echo "Build complete!"
