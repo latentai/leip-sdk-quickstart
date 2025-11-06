@@ -8,15 +8,17 @@ mkdir -p ~/.tvm/tophub
 cp tophub/tophub/* ~/.tvm/tophub
 rm -rf tophub
 
+echo "Installing uv..."
+pip install --break-system-packages uv
+
 echo "Installing Python packages for LEIP Optimize..."
-pip install \
+uv pip install --system \
   torch \
   torchvision \
   "numpy~=1.24" \
   ultralytics \
   kagglehub \
   tflite \
-  huggingface_hub \
   colorama \
   optimum[onnx] \
   timm

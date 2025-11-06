@@ -15,9 +15,9 @@ apt-get clean && \
 rm -rf /var/lib/apt/lists/*
 
 echo "Updating Python packages with known vulnerabilities..."
-pip install --no-cache-dir --upgrade \
-  GitPython>=3.1.41 \
-  starlette>=0.49.1 \
-  Brotli>=1.2.0
+pip install --no-cache-dir --break-system-packages --upgrade \
+  "GitPython>=3.1.41" \
+  "starlette>=0.49.1" \
+  "Brotli>=1.2.0"
 
 echo "Vulnerability patching complete!"
